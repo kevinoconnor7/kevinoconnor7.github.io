@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Kevin O'Connor</title>
+ <link href="http://kevinoconnor7.github.io/" rel="self"/>
+ <link href="http://kevinoconnor7.github.io"/>
+ <updated>2013-04-22T13:10:13-04:00</updated>
+ <id>http://kevinoconnor7.github.io</id>
+ <author>
+   <name>Kevin O'Connor</name>
+   <email>kevin@oconnor.mp</email>
+ </author>
+
+ 
+ <entry>
+   <title>CloudFlare Dynamic DNS</title>
+   <link href="http://kevinoconnor7.github.io/2012/11/07/cloudflare-dynamic-dns"/>
+   <updated>2012-11-07T00:00:00-05:00</updated>
+   <id>http://kevinoconnor7.github.io/2012/11/07/cloudflare-dynamic-dns</id>
+   <content type="html">&lt;p&gt;So I have an extra computer back home that runs some VMs that I like to have access to remotely. Easy enough, just some basic DDNS. However, I use CloudFlare whom doesn&amp;#8217;t directly offer dynamic DNS. Worry not though, for CloudFlare does have an awesome API for updating DNS records.&lt;/p&gt;
+
+&lt;h3 id='final_script'&gt;Final Script:&lt;/h3&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;&lt;span class='c'&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class='nv'&gt;WAN_IP&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='sb'&gt;`&lt;/span&gt;wget -O - -q &lt;span class='o'&gt;[&lt;/span&gt;http://ifconfig.me/ip&lt;span class='sb'&gt;`&lt;/span&gt;&lt;span class='o'&gt;](&lt;/span&gt;http://ifconfig.me/ip%60&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='nv'&gt;OLD_WAN_IP&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;&lt;span class='sb'&gt;`&lt;/span&gt;cat /var/CURRENT_WAN_IP.txt&lt;span class='sb'&gt;`&lt;/span&gt;
+&lt;span class='k'&gt;if&lt;/span&gt; &lt;span class='o'&gt;[&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;$WAN_IP&amp;quot;&lt;/span&gt; &lt;span class='o'&gt;=&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;$OLD_WAN_IP&amp;quot;&lt;/span&gt; &lt;span class='o'&gt;]&lt;/span&gt;
+&lt;span class='k'&gt;then&lt;/span&gt;
+&lt;span class='k'&gt;        &lt;/span&gt;&lt;span class='nb'&gt;echo&lt;/span&gt; &lt;span class='s2'&gt;&amp;quot;IP Unchanged&amp;quot;&lt;/span&gt;
+&lt;span class='k'&gt;else&lt;/span&gt;
+&lt;span class='k'&gt;        &lt;/span&gt;curl &lt;span class='o'&gt;[&lt;/span&gt;https://www.cloudflare.com/api_json.html&lt;span class='o'&gt;](&lt;/span&gt;https://www.cloudflare.com/api_json.html&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nv'&gt;a&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;rec_edit &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nv'&gt;tkn&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;8afbe6dea02407989af4dd4c97bb6e25 &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nv'&gt;email&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;sample@example.com &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nv'&gt;z&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;example.com &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nv'&gt;id&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;9001 &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nb'&gt;type&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;A &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nv'&gt;name&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;sub &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='nv'&gt;ttl&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;1 &lt;span class='se'&gt;\&lt;/span&gt;
+          -d &lt;span class='s2'&gt;&amp;quot;content=$WAN_IP&amp;quot;&lt;/span&gt;
+        &lt;span class='nb'&gt;echo&lt;/span&gt; &lt;span class='nv'&gt;$WAN_IP&lt;/span&gt; &amp;gt; /var/CURRENT_WAN_IP.txt
+&lt;span class='k'&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So let&amp;#8217;s go over how I got here. First things first, you&amp;#8217;ll need your API key which you can get from your account settings page. You&amp;#8217;ll also need to know the DNS Record ID of the record you which to modify.That&amp;#8217;s where we&amp;#8217;ll start&lt;/p&gt;
+
+&lt;h3 id='getting_your_dns_record_id'&gt;Getting your DNS Record ID:&lt;/h3&gt;
+
+&lt;p&gt;If you need help, see &lt;a href='http://www.cloudflare.com/docs/client-
+api.html#s3.3'&gt;here&lt;/a&gt;. To keep it short, run this command:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;curl &lt;span class='o'&gt;[&lt;/span&gt;https://www.cloudflare.com/api_json.html&lt;span class='o'&gt;](&lt;/span&gt;https://www.cloudflare.com/api_json.html&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;a&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;rec_load_all &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;tkn&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;8afbe6dea02407989af4dd4c97bb6e25 &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;email&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;sample@example.com &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;z&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;example.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you&amp;#8217;re confused about what some of this stuff is then let me explain quickly. &lt;strong&gt;tkn&lt;/strong&gt; should be set to your CloudFlare API key. &lt;strong&gt;email&lt;/strong&gt; is the e-mail address of your CloudFlare account (same one that issued the API key). &lt;strong&gt;z&lt;/strong&gt; is the TLD of the domain you want to manage on CloudFlare.&lt;/p&gt;
+
+&lt;p&gt;Dealing with the return can be interesting. Your response will be in JSON so you&amp;#8217;ll have to scan through there for the record you want to mange and pull out its ID. If you need it formatted nicer, try using this &lt;a href='http://jsonviewer.stack.hu/'&gt;online JSON parser&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='editing_the_record'&gt;Editing the Record&lt;/h3&gt;
+
+&lt;p&gt;Similiar, the official documentation is &lt;a href='http://www.cloudflare.com/docs
+/client-api.html#s5.2'&gt;here&lt;/a&gt;. This time though, there&amp;#8217;s a little bit more involved:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt;curl &lt;span class='o'&gt;[&lt;/span&gt;https://www.cloudflare.com/api_json.html&lt;span class='o'&gt;](&lt;/span&gt;https://www.cloudflare.com/api_json.html&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;a&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;rec_edit &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;tkn&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;8afbe6dea02407989af4dd4c97bb6e25 &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;id&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;9001 &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;email&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;sample@example.com &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nv'&gt;z&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;example.com &lt;span class='se'&gt;\&lt;/span&gt;
+  -d &lt;span class='nb'&gt;type&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;A
+  -d &lt;span class='nv'&gt;name&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;sub
+  -d &lt;span class='nv'&gt;content&lt;/span&gt;&lt;span class='o'&gt;=&lt;/span&gt;1.2.3.4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;A lot of the information is overlap from last time but there are a few new additions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;id&lt;/strong&gt; The DNS Record ID you got in the previous step &lt;strong&gt;type&lt;/strong&gt; The type of the DNS record (A, CNAME, AAAA, MX, SRV, etc.) &lt;strong&gt;name&lt;/strong&gt; The name of the subdomain (you can give the full domain name) &lt;strong&gt;content&lt;/strong&gt; The content of the record. For A records it should be the IP address&lt;/p&gt;
+
+&lt;h3 id='putting_it_together'&gt;Putting it together&lt;/h3&gt;
+
+&lt;p&gt;To finalize I grab the current WAN IP from the plaintext service &lt;a href='http://ifconfig.me/ip'&gt;&lt;a href='http://ifconfig.me/ip'&gt;http://ifconfig.me/ip&lt;/a&gt;&lt;/a&gt;. With a little work I get the final product at the top of this post. I also create a &lt;a href='https://gist.github.com/4036347'&gt;gist&lt;/a&gt; of this if you prefer to make some edits.&lt;/p&gt;
+
+&lt;p&gt;To automate the process I simply wrote a cron to:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='bash'&gt; 
+*/5	*	*	*	*	~/scripts/cf_dynamic_ip.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id='some_notes'&gt;Some Notes&lt;/h3&gt;
+
+&lt;p&gt;Right now I have it store the current WAN IP in /var/. You can change it to your preferred location or you can just get rid of the storing of it and the comparison. An issue that could arise that if the script fails to set the IP on CloudFlare, it will not try again until the WAN IP changes.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Kunaki PHP Class</title>
+   <link href="http://kevinoconnor7.github.io/2012/07/17/kunaki-php-class"/>
+   <updated>2012-07-17T00:00:00-04:00</updated>
+   <id>http://kevinoconnor7.github.io/2012/07/17/kunaki-php-class</id>
+   <content type="html">&lt;h3 id='overview'&gt;Overview&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href='http://Kunaki.com'&gt;Kunaki&lt;/a&gt; is a popular disk publishing service that is fully automated and low-overhead. I went ahead and created an interface layer between Kunaki&amp;#8217;s XML web service and PHP. It&amp;#8217;s incredibly straight-forward and simple to use and sticts to OOP. It&amp;#8217;s fully documented (to the best of my ability, limited by Kunaki&amp;#8217;s documentation) and provides example uses.&lt;/p&gt;
+
+&lt;h3 id='simple_example'&gt;Simple Example&lt;/h3&gt;
+
+&lt;p&gt;Here&amp;#8217;s a really simple example getting shipping options and pricing for an order:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$order = new Kunaki_Order();
+$order-&amp;gt;addProductId($ProductId, 10);
+$order-&amp;gt;PostalCode = 10004;
+$order-&amp;gt;Country = United States;
+$order-&amp;gt;State_Province = NY;
+$shipping = $Kunaki-&amp;gt;getShippingOptions($order);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;From here you can have the pick the shipping method you want, fill in the rest of the customer infromation (though you likely already have it), and submit the order.&lt;/p&gt;
+
+&lt;h3 id='notes'&gt;Notes&lt;/h3&gt;
+
+&lt;p&gt;It should be noted though that you once you submit an order, it still has to be approved in your Kunaki panel. Also, depending on the input data and what you allow, it might not line up with what Kunaki wants and might error out when you submit a request. Error response checking is important and making sure the order gets resubmitted if you&amp;#8217;ve already taken payment.&lt;/p&gt;
+
+&lt;p&gt;There is no API method to being able to approve orders so I would suggest trying to submit the order first, fix data or prompt the user to fix it if it fails, and then taking payment. Then store the Kunaki order number and the payment gateway information (ex. Paypal order ID) in a table and then using that to approve orders on Kunaki. This &lt;em&gt;should&lt;/em&gt; cover your bases but application-specific circumstances always arise. Just be mindful of the limitations of this API.&lt;/p&gt;
+
+&lt;h3 id='download__documentation'&gt;Download &amp;amp; Documentation&lt;/h3&gt;
+
+&lt;p&gt;You can find my full documentation and code over at the &lt;a href='https://github.com/kevinoconnor7/PHP-Kunaki'&gt;Github repo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id='license'&gt;License&lt;/h3&gt;
+
+&lt;p&gt;This software is released under the GPLv3 license. If you want to have some bonding time with the license you can do so &lt;a href='http://www.gnu.org/licenses/gpl-3.0.txt'&gt;here&lt;/a&gt;.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Personal Blog</title>
+   <link href="http://kevinoconnor7.github.io/2012/04/22/personal-blog"/>
+   <updated>2012-04-22T00:00:00-04:00</updated>
+   <id>http://kevinoconnor7.github.io/2012/04/22/personal-blog</id>
+   <content type="html">&lt;p&gt;Alas I have opted to venture out and create my own blog. This will be my place to write articles on my work and helpful tidbits of code that I come across.&lt;/p&gt;</content>
+ </entry>
+ 
+ 
+</feed>

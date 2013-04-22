@@ -1,0 +1,285 @@
+@import "LESSHat/lesshat.less";
+@import "github.less";
+
+body {
+    background: #fff;
+}
+
+.container-narrow {
+    margin: 0 auto;
+    max-width: 700px;
+    & > hr {
+        margin: 30px 0;
+    }
+}
+.tag_box {
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    a {
+        padding: 3px 6px;
+        margin: 2px;
+        background: #eee;
+        color: #555;
+        border-radius: 3px;
+        text-decoration: none;
+        border: 1px dashed #cccccc;
+        span {
+            vertical-align: super;
+            font-size: 0.8em;
+        }
+    }
+    a:hover {
+        background-color: #e5e5e5;
+    }
+    li {
+        line-height: 28px;
+        i {
+            opacity: 0.9;
+        }
+    }
+    a.active {
+        background: #57A957;
+        border: 1px solid #4c964d;
+        color: #FFF;
+    }
+}
+.tag_box.inline {
+    li {
+        float: left;
+    }
+}
+.post-full {
+    .date {
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+}
+.post {
+    & > h3.title {
+        position: relative;
+        padding-top: 10px;
+        span.date {
+            position: absolute;
+            right: 0;
+            font-size: 0.9em;
+        }
+    }
+    & > .more {
+        margin: 10px 0;
+        text-align: left;
+    }
+}
+.navbar {
+    .nav {
+        float: right;
+    }
+
+    position: relative;
+    z-index: 100;
+}
+
+.index-banner {
+    background: url('../img/bg-overlay-pattern.png') repeat, url('../img/bg_4.jpg') no-repeat;
+    height: 400px;
+    margin-bottom: -52px;
+    top: -62px;
+    position: relative;
+
+    .stripe {
+        background: rgba(0,0,0,0.7);
+        color: rgba(255,255,255,0.9);
+        padding: 10px 15%;
+        position: relative;
+        top: 200px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+
+        h1,h2,h3,h4,h5,h6 {
+            margin: 0;
+        }
+
+        h1 {
+            line-height: 32px;
+        }
+
+        h2 {
+            line-height: 28px;
+            font-weight: lighter;
+        }
+    }
+}
+
+/* Blog */
+#blog-page > hr:last-child {
+    display: none;
+}
+
+.blog-post > h3:first-child {
+    margin-bottom: 0;
+    line-height: 20px;
+}
+
+/* Footer */
+
+.stalk-me {
+    background: url('../img/binding_dark.png') repeat;
+    border-bottom: 1px solid #111;
+    margin: 5px 0 0;
+    min-height: 30px;
+    padding: 25px 0;
+    height: 32px;
+
+    ul.social-list {
+        &> li {
+            float: left;
+            margin-right: 15px;
+
+            &> a {
+                display: block;
+                text-indent: -10000px;
+            }
+        }
+    }
+}
+
+footer {
+    background: #222;
+    border-top: 1px solid #2a2a2a;
+    color: #fff;
+    font-size: 0.85em;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    padding: 5px 0;
+    height: 20px;
+}
+
+/* Sticky footer */
+
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -119px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 114px;
+}
+
+/* Social Media Icons */
+.social {
+    background: url(../img/social-sprite.png) no-repeat;
+    display: block;
+}
+
+.stitches-social(@x: 0, @y: 0, @width: 0, @height: 0) {
+  background-position: @x @y;
+  width: @width;
+  height: @height;
+}
+
+.social-aim {
+    .stitches-social(-0px, -0px, 32px, 32px);
+}
+
+.social-behance {
+    .stitches-social(-32px, -0px, 32px, 32px);
+}
+
+.social-digg {
+    .stitches-social(-64px, -0px, 32px, 32px);
+}
+
+.social-dribbble {
+    .stitches-social(-96px, -0px, 32px, 32px);
+}
+
+.social-ember {
+    .stitches-social(-0px, -32px, 32px, 32px);
+}
+
+.social-evernote {
+    .stitches-social(-32px, -32px, 32px, 32px);
+}
+
+.social-facebook {
+    .stitches-social(-64px, -32px, 32px, 32px);
+}
+
+.social-flickr {
+    .stitches-social(-96px, -32px, 32px, 32px);
+}
+
+.social-forrst {
+    .stitches-social(-0px, -64px, 32px, 32px);
+}
+
+.social-github {
+    .stitches-social(-32px, -64px, 32px, 32px);
+}
+
+.social-googleplus {
+    .stitches-social(-64px, -64px, 32px, 32px);
+}
+
+.social-last-fm {
+    .stitches-social(-96px, -64px, 32px, 32px);
+}
+
+.social-linkedin {
+    .stitches-social(-0px, -96px, 32px, 32px);
+}
+
+.social-paypal {
+    .stitches-social(-32px, -96px, 32px, 32px);
+}
+
+.social-rss {
+    .stitches-social(-64px, -96px, 32px, 32px);
+}
+
+.social-sharethis {
+    .stitches-social(-96px, -96px, 32px, 32px);
+}
+
+.social-skype {
+    .stitches-social(-128px, -0px, 32px, 32px);
+}
+
+.social-tumblr {
+    .stitches-social(-128px, -32px, 32px, 32px);
+}
+
+.social-twitter {
+    .stitches-social(-128px, -64px, 32px, 32px);
+}
+
+.social-vimeo {
+    .stitches-social(-128px, -96px, 32px, 32px);
+}
+
+.social-wordpress {
+    .stitches-social(-0px, -128px, 32px, 32px);
+}
+
+.social-yahoo {
+    .stitches-social(-32px, -128px, 32px, 32px);
+}
+
+.social-youtube {
+    .stitches-social(-64px, -128px, 32px, 32px);
+}
+
+.social-zerply {
+    .stitches-social(-96px, -128px, 32px, 32px);
+}

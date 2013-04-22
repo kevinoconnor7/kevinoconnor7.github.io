@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CloudFlare Dynamic DNS | Kevin O'Connor</title>
+    
+    <meta name="author" content="Kevin O'Connor">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- Le scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="/assets/themes/twitter/js/jquery.github.min.js"></script>
+    <script src="/assets/themes/twitter/js/grandeLatte.js"></script>
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div id="wrap">
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+          <div class="container-narrow">
+            <a class="brand" href="/">Kevin O'Connor</a>
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/blog.html">Blog</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/code.html">Code</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+
+
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container-narrow">
+
+        <div class="content">
+          
+<div class="page-header">
+  <h1>CloudFlare Dynamic DNS </h1>
+  <div class="date">
+    <span>07 November 2012</span>
+  </div>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="content">
+      <p>So I have an extra computer back home that runs some VMs that I like to have access to remotely. Easy enough, just some basic DDNS. However, I use CloudFlare whom doesn&#8217;t directly offer dynamic DNS. Worry not though, for CloudFlare does have an awesome API for updating DNS records.</p>
+
+<h3 id='final_script'>Final Script:</h3>
+<div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/sh</span>
+<span class='nv'>WAN_IP</span><span class='o'>=</span><span class='sb'>`</span>wget -O - -q <span class='o'>[</span>http://ifconfig.me/ip<span class='sb'>`</span><span class='o'>](</span>http://ifconfig.me/ip%60<span class='o'>)</span>
+<span class='nv'>OLD_WAN_IP</span><span class='o'>=</span><span class='sb'>`</span>cat /var/CURRENT_WAN_IP.txt<span class='sb'>`</span>
+<span class='k'>if</span> <span class='o'>[</span> <span class='s2'>&quot;$WAN_IP&quot;</span> <span class='o'>=</span> <span class='s2'>&quot;$OLD_WAN_IP&quot;</span> <span class='o'>]</span>
+<span class='k'>then</span>
+<span class='k'>        </span><span class='nb'>echo</span> <span class='s2'>&quot;IP Unchanged&quot;</span>
+<span class='k'>else</span>
+<span class='k'>        </span>curl <span class='o'>[</span>https://www.cloudflare.com/api_json.html<span class='o'>](</span>https://www.cloudflare.com/api_json.html<span class='o'>)</span> <span class='se'>\</span>
+          -d <span class='nv'>a</span><span class='o'>=</span>rec_edit <span class='se'>\</span>
+          -d <span class='nv'>tkn</span><span class='o'>=</span>8afbe6dea02407989af4dd4c97bb6e25 <span class='se'>\</span>
+          -d <span class='nv'>email</span><span class='o'>=</span>sample@example.com <span class='se'>\</span>
+          -d <span class='nv'>z</span><span class='o'>=</span>example.com <span class='se'>\</span>
+          -d <span class='nv'>id</span><span class='o'>=</span>9001 <span class='se'>\</span>
+          -d <span class='nb'>type</span><span class='o'>=</span>A <span class='se'>\</span>
+          -d <span class='nv'>name</span><span class='o'>=</span>sub <span class='se'>\</span>
+          -d <span class='nv'>ttl</span><span class='o'>=</span>1 <span class='se'>\</span>
+          -d <span class='s2'>&quot;content=$WAN_IP&quot;</span>
+        <span class='nb'>echo</span> <span class='nv'>$WAN_IP</span> &gt; /var/CURRENT_WAN_IP.txt
+<span class='k'>fi</span>
+</code></pre></div>
+<p>So let&#8217;s go over how I got here. First things first, you&#8217;ll need your API key which you can get from your account settings page. You&#8217;ll also need to know the DNS Record ID of the record you which to modify.That&#8217;s where we&#8217;ll start</p>
+
+<h3 id='getting_your_dns_record_id'>Getting your DNS Record ID:</h3>
+
+<p>If you need help, see <a href='http://www.cloudflare.com/docs/client-
+api.html#s3.3'>here</a>. To keep it short, run this command:</p>
+<div class='highlight'><pre><code class='bash'>curl <span class='o'>[</span>https://www.cloudflare.com/api_json.html<span class='o'>](</span>https://www.cloudflare.com/api_json.html<span class='o'>)</span> <span class='se'>\</span>
+  -d <span class='nv'>a</span><span class='o'>=</span>rec_load_all <span class='se'>\</span>
+  -d <span class='nv'>tkn</span><span class='o'>=</span>8afbe6dea02407989af4dd4c97bb6e25 <span class='se'>\</span>
+  -d <span class='nv'>email</span><span class='o'>=</span>sample@example.com <span class='se'>\</span>
+  -d <span class='nv'>z</span><span class='o'>=</span>example.com
+</code></pre></div>
+<p>If you&#8217;re confused about what some of this stuff is then let me explain quickly. <strong>tkn</strong> should be set to your CloudFlare API key. <strong>email</strong> is the e-mail address of your CloudFlare account (same one that issued the API key). <strong>z</strong> is the TLD of the domain you want to manage on CloudFlare.</p>
+
+<p>Dealing with the return can be interesting. Your response will be in JSON so you&#8217;ll have to scan through there for the record you want to mange and pull out its ID. If you need it formatted nicer, try using this <a href='http://jsonviewer.stack.hu/'>online JSON parser</a>.</p>
+
+<h3 id='editing_the_record'>Editing the Record</h3>
+
+<p>Similiar, the official documentation is <a href='http://www.cloudflare.com/docs
+/client-api.html#s5.2'>here</a>. This time though, there&#8217;s a little bit more involved:</p>
+<div class='highlight'><pre><code class='bash'>curl <span class='o'>[</span>https://www.cloudflare.com/api_json.html<span class='o'>](</span>https://www.cloudflare.com/api_json.html<span class='o'>)</span> <span class='se'>\</span>
+  -d <span class='nv'>a</span><span class='o'>=</span>rec_edit <span class='se'>\</span>
+  -d <span class='nv'>tkn</span><span class='o'>=</span>8afbe6dea02407989af4dd4c97bb6e25 <span class='se'>\</span>
+  -d <span class='nv'>id</span><span class='o'>=</span>9001 <span class='se'>\</span>
+  -d <span class='nv'>email</span><span class='o'>=</span>sample@example.com <span class='se'>\</span>
+  -d <span class='nv'>z</span><span class='o'>=</span>example.com <span class='se'>\</span>
+  -d <span class='nb'>type</span><span class='o'>=</span>A
+  -d <span class='nv'>name</span><span class='o'>=</span>sub
+  -d <span class='nv'>content</span><span class='o'>=</span>1.2.3.4
+</code></pre></div>
+<p>A lot of the information is overlap from last time but there are a few new additions.</p>
+
+<p><strong>id</strong> The DNS Record ID you got in the previous step <strong>type</strong> The type of the DNS record (A, CNAME, AAAA, MX, SRV, etc.) <strong>name</strong> The name of the subdomain (you can give the full domain name) <strong>content</strong> The content of the record. For A records it should be the IP address</p>
+
+<h3 id='putting_it_together'>Putting it together</h3>
+
+<p>To finalize I grab the current WAN IP from the plaintext service <a href='http://ifconfig.me/ip'><a href='http://ifconfig.me/ip'>http://ifconfig.me/ip</a></a>. With a little work I get the final product at the top of this post. I also create a <a href='https://gist.github.com/4036347'>gist</a> of this if you prefer to make some edits.</p>
+
+<p>To automate the process I simply wrote a cron to:</p>
+<div class='highlight'><pre><code class='bash'> 
+*/5	*	*	*	*	~/scripts/cf_dynamic_ip.sh
+</code></pre></div>
+<h3 id='some_notes'>Some Notes</h3>
+
+<p>Right now I have it store the current WAN IP in /var/. You can change it to your preferred location or you can just get rid of the storing of it and the comparison. An issue that could arise that if the script fails to set the IP on CloudFlare, it will not try again until the WAN IP changes.</p>
+    </div>
+
+    
+
+    
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/2012/07/17/kunaki-php-class" title="Kunaki PHP Class">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next disabled"><a>Next &rarr;</a>
+      
+      </ul>
+    </div>
+    <hr>
+    
+  </div>
+</div>
+
+
+        </div>
+      </div>
+      <div id="push"></div>
+    </div>
+    <div id="footer">
+      <div class="stalk-me">
+        <div class="container-narrow">
+          <div class="row-fluid">
+            <ul class="unstyled social-list">
+              <li><a href="http://github.com/kevinoconnor7" class="social social-github">Github</a></li>
+              <li><a href="http://gplus.to/oconnor" class="social social-googleplus">Google+</a></li>
+              <li><a href="http://www.facebook.com/kevinoconnor" class="social social-facebook">Facebook</a></li>
+              <li><a href="http://www.linkedin.com/in/kevinoconnor7" class="social social-linkedin">LinkedIn</a></li>
+            </uL>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="container-narrow">
+
+          <span>&copy; 2013 Kevin O'Connor
+            with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+          </span>
+        </div>
+      </footer>
+    </div>
+
+    
+  </body>
+</html>
+

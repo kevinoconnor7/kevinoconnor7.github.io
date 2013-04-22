@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Kunaki PHP Class | Kevin O'Connor</title>
+    
+    <meta name="author" content="Kevin O'Connor">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- Le scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="/assets/themes/twitter/js/jquery.github.min.js"></script>
+    <script src="/assets/themes/twitter/js/grandeLatte.js"></script>
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div id="wrap">
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+          <div class="container-narrow">
+            <a class="brand" href="/">Kevin O'Connor</a>
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/blog.html">Blog</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/code.html">Code</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+
+
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container-narrow">
+
+        <div class="content">
+          
+<div class="page-header">
+  <h1>Kunaki PHP Class </h1>
+  <div class="date">
+    <span>17 July 2012</span>
+  </div>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="content">
+      <h3 id='overview'>Overview</h3>
+
+<p><a href='http://Kunaki.com'>Kunaki</a> is a popular disk publishing service that is fully automated and low-overhead. I went ahead and created an interface layer between Kunaki&#8217;s XML web service and PHP. It&#8217;s incredibly straight-forward and simple to use and sticts to OOP. It&#8217;s fully documented (to the best of my ability, limited by Kunaki&#8217;s documentation) and provides example uses.</p>
+
+<h3 id='simple_example'>Simple Example</h3>
+
+<p>Here&#8217;s a really simple example getting shipping options and pricing for an order:</p>
+
+<pre><code>$order = new Kunaki_Order();
+$order-&gt;addProductId($ProductId, 10);
+$order-&gt;PostalCode = 10004;
+$order-&gt;Country = United States;
+$order-&gt;State_Province = NY;
+$shipping = $Kunaki-&gt;getShippingOptions($order);</code></pre>
+
+<p>From here you can have the pick the shipping method you want, fill in the rest of the customer infromation (though you likely already have it), and submit the order.</p>
+
+<h3 id='notes'>Notes</h3>
+
+<p>It should be noted though that you once you submit an order, it still has to be approved in your Kunaki panel. Also, depending on the input data and what you allow, it might not line up with what Kunaki wants and might error out when you submit a request. Error response checking is important and making sure the order gets resubmitted if you&#8217;ve already taken payment.</p>
+
+<p>There is no API method to being able to approve orders so I would suggest trying to submit the order first, fix data or prompt the user to fix it if it fails, and then taking payment. Then store the Kunaki order number and the payment gateway information (ex. Paypal order ID) in a table and then using that to approve orders on Kunaki. This <em>should</em> cover your bases but application-specific circumstances always arise. Just be mindful of the limitations of this API.</p>
+
+<h3 id='download__documentation'>Download &amp; Documentation</h3>
+
+<p>You can find my full documentation and code over at the <a href='https://github.com/kevinoconnor7/PHP-Kunaki'>Github repo</a>.</p>
+
+<h3 id='license'>License</h3>
+
+<p>This software is released under the GPLv3 license. If you want to have some bonding time with the license you can do so <a href='http://www.gnu.org/licenses/gpl-3.0.txt'>here</a>.</p>
+    </div>
+
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#Kunaki-ref">Kunaki <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#php-ref">php <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#api-ref">api <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/2012/04/22/personal-blog" title="Personal Blog">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/2012/11/07/cloudflare-dynamic-dns" title="CloudFlare Dynamic DNS">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+  </div>
+</div>
+
+
+        </div>
+      </div>
+      <div id="push"></div>
+    </div>
+    <div id="footer">
+      <div class="stalk-me">
+        <div class="container-narrow">
+          <div class="row-fluid">
+            <ul class="unstyled social-list">
+              <li><a href="http://github.com/kevinoconnor7" class="social social-github">Github</a></li>
+              <li><a href="http://gplus.to/oconnor" class="social social-googleplus">Google+</a></li>
+              <li><a href="http://www.facebook.com/kevinoconnor" class="social social-facebook">Facebook</a></li>
+              <li><a href="http://www.linkedin.com/in/kevinoconnor7" class="social social-linkedin">LinkedIn</a></li>
+            </uL>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="container-narrow">
+
+          <span>&copy; 2013 Kevin O'Connor
+            with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+          </span>
+        </div>
+      </footer>
+    </div>
+
+    
+  </body>
+</html>
+
