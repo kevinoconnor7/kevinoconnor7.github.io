@@ -20,8 +20,8 @@ var index_page = function() {
 	var selector = $('.index-banner .banners');
 
 	var crossfade = function(){
-		var active = $('div.active', $(selector));
-		var next = (active.next().length > 0) ? active.next() : $('div:first-child', $(selector));
+		var active = $(' > div.active', $(selector));
+		var next = (active.next().length > 0) ? active.next() : $(' > div:first-child', $(selector));
 		next.hide().css('z-index',3);
 		next.fadeIn(1500,function() {
 			active.css('z-index',1).hide().removeClass('active');
