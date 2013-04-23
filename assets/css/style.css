@@ -619,19 +619,77 @@ body {
   float: right;
 }
 .index-banner {
-  background: url('../img/bg-overlay-pattern.png') repeat, url('../img/bg_4.jpg') no-repeat;
   height: 400px;
   margin-bottom: -52px;
   top: -62px;
   position: relative;
+}
+.index-banner .banners {
+  position: relative;
+  height: 100%;
+}
+.index-banner .banners > div {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: none;
+  width: 100%;
+}
+.index-banner .banners > div:first-child {
+  display: block;
+}
+.index-banner .banners .banner-1 {
+  background: url('../img/bg_1.jpg') no-repeat;
+}
+.index-banner .banners .banner-2 {
+  background: url('../img/bg_2.jpg') no-repeat;
+}
+.index-banner .banners .banner-3 {
+  background: url('../img/bg_3.jpg') no-repeat;
+}
+.index-banner .banners .banner-4 {
+  background: url('../img/bg_4.jpg') no-repeat;
+}
+.index-banner .banners .banner-5 {
+  background: url('../img/bg_5.jpg') no-repeat;
+}
+.index-banner .banners .banner-6 {
+  background: url('../img/bg_6.jpg') no-repeat;
+}
+.index-banner .banners .banner-7 {
+  background: url('../img/bg_7.jpg') no-repeat;
+}
+.index-banner .banners .banner-8 {
+  background: url('../img/bg_8.jpg') no-repeat;
+}
+.index-banner .banners .banner-9 {
+  background: url('../img/bg_9.jpg') no-repeat;
+}
+.index-banner .banners .banner-10 {
+  background: url('../img/bg_10.jpg') no-repeat;
+}
+.index-banner .banners .banner-11 {
+  background: url('../img/bg_11.jpg') no-repeat;
+}
+.index-banner .banners .banner-12 {
+  background: url('../img/bg_12.jpg') no-repeat;
+}
+.index-banner .banners .banner-13 {
+  background: url('../img/bg_13.jpg') no-repeat;
+}
+.index-banner .banners .overlay-dotted {
+  background: url('../img/bg-overlay-pattern.png') repeat;
+  height: inherit;
+  display: block;
 }
 .index-banner .stripe {
   background: rgba(0, 0, 0, 0.7);
   color: rgba(255, 255, 255, 0.9);
   padding: 10px 15%;
   position: relative;
-  top: 200px;
+  top: -200px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
 }
 .index-banner .stripe h1,
 .index-banner .stripe h2,
@@ -703,6 +761,25 @@ body {
 #push,
 #footer {
   height: 114px;
+}
+/* Resume */
+.skills .description,
+.experience .description {
+  font-size: 0.9em;
+}
+.experience .timeline {
+  margin-top: -10px;
+  font-size: 0.9em;
+}
+/* Helpers */
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
 }
 /* Social Media Icons */
 .social {
