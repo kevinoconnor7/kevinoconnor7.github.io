@@ -49,6 +49,11 @@
               {% assign pages_list = site.pages %}
               {% assign group = 'navigation' %}
               {% include JB/pages_list %}
+              {% if page.url contains 'blog' %}
+                <li class="active"><a href="{{ BASE_PATH }}/blog" class="active">Blog</a></li>
+              {% else %}
+                <li><a href="{{ BASE_PATH }}/blog">Blog</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -89,7 +94,7 @@
       <div class="stalk-me">
         <div class="container-narrow">
           <div class="row-fluid">
-            <ul class="unstyled social-list">
+            <ul class="unstyled stalk-me-list pull-right">
               <li><a href="http://github.com/kevinoconnor7" class="social social-github" rel="tooltip" title="GitHub">Github</a></li>
               <li><a href="http://gplus.to/oconnor" class="social social-googleplus" rel="tooltip" title="Google+">Google+</a></li>
               <li><a href="http://www.facebook.com/kevinoconnor" class="social social-facebook" rel="tooltip" title="Facebook">Facebook</a></li>

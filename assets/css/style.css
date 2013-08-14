@@ -561,35 +561,36 @@ body {
 }
 .tag_box {
   list-style: none;
-  margin: 0;
+  margin: -23px 0 10px;
   overflow: hidden;
-}
-.tag_box a {
-  padding: 3px 6px;
-  margin: 2px;
-  background: #eee;
-  color: #555;
-  border-radius: 3px;
-  text-decoration: none;
-  border: 1px dashed #cccccc;
-}
-.tag_box a span {
-  vertical-align: super;
-  font-size: 0.8em;
-}
-.tag_box a:hover {
-  background-color: #e5e5e5;
-}
-.tag_box li {
-  line-height: 28px;
-}
-.tag_box li i {
-  opacity: 0.9;
-}
-.tag_box a.active {
-  background: #57A957;
-  border: 1px solid #4c964d;
-  color: #FFF;
+  /*a {
+        padding: 3px 6px;
+        margin: 2px;
+        background: #eee;
+        color: #555;
+        border-radius: 3px;
+        text-decoration: none;
+        border: 1px dashed #cccccc;
+        span {
+            vertical-align: super;
+            font-size: 0.8em;
+        }
+    }
+    a:hover {
+        background-color: #e5e5e5;
+    }
+    li {
+        line-height: 28px;
+        i {
+            opacity: 0.9;
+        }
+    }
+    a.active {
+        background: #57A957;
+        border: 1px solid #4c964d;
+        color: #FFF;
+    }*/
+
 }
 .tag_box.inline li {
   float: left;
@@ -723,11 +724,11 @@ body {
   padding: 25px 0;
   height: 32px;
 }
-.stalk-me ul.social-list > li {
+.stalk-me ul.stalk-me-list > li {
   float: left;
   margin-right: 15px;
 }
-.stalk-me ul.social-list > li > a {
+.stalk-me ul.stalk-me-list > li > a {
   display: block;
   text-indent: -10000px;
 }

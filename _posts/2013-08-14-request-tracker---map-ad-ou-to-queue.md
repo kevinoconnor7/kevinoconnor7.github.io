@@ -24,7 +24,7 @@ answer to exentsionability, sadly written in Perl.
 Alas, I decided to tackle this challenge with the following Scrip.
 
 ## Final Code
-<script src="https://gist.github.com/kevinoconnor7/6235387.js"></script>
+{% gist 6235387 %}
 
 ## Configuration
 You'll need to add a Scrip by going to Tools -> Configuration -> Global -> Scrips -> Create and fill

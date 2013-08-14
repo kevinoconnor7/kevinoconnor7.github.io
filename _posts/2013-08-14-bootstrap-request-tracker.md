@@ -19,7 +19,7 @@ the theme to help spice things up a little bit. I've decided to share my custom 
 
 ## Custom CSS
 Apply this stylesheet in Tools -> Configuration -> Tools -> Theme -> Custom CSS (Advanced)
-<script src="https://gist.github.com/kevinoconnor7/6234883.js"></script>
+{% gist 6234883 %}
 
 **Note:** This has only been tested on 4.0 <= RT version <= 4.0.13.
 

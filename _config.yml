@@ -3,8 +3,8 @@
 permalink: /:categories/:year/:month/:day/:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-auto: true
 pygments: true
+markdown: rdiscount
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
@@ -133,5 +133,5 @@ jekyll_sort:
     direction: up
     dest: pages_sorted_by_title
 
-paginate: 10
-paginate_file: blog.html
+paginate: 2
+paginate_path: "blog/page:num"
