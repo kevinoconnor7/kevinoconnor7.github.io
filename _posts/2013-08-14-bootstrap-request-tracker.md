@@ -2,7 +2,11 @@
 layout: post
 title: Bootstrap Request Tracker
 category: code
-tags: bootstrap,request tracker,css 
+tags: 
+- bootstrap
+- request tracker
+- css
+- code
 ---
 
 At one of my previous jobs I had setup [Request Tracker](http://www.bestpractical.com/rt/) to handle

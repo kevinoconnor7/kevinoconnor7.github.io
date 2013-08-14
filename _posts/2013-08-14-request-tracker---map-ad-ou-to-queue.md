@@ -2,7 +2,11 @@
 layout: post
 title: Request Tracker - Map AD OU to Queue
 category: code
-tags: request tracker,perl,AD,Active Directory
+tags: 
+- request tracker
+- perl
+- Active Directory
+- code
 ---
 
 While working for a school district that ran a windows shop I decided to branch out and use
