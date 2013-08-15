@@ -16,6 +16,8 @@ header : false
 					</small>
 				</p>
 				<p>{{ post.content | truncatewords:200 }}</p>
+
+				<p><a href="{{ post.url }}">Read more...</a></p>
 			</div>
 		</div>
 		{% unless forloop.last %}
