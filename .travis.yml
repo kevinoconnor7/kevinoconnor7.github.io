@@ -1,2 +1,27 @@
 language: ruby
-script: "bundle exec jekyll build"
+script: bundle exec jekyll build
+deploy:
+  - provider: divshot
+    api_key:
+      secure: Gz5aBaaUuPykaeAPV7rlja10Q4n2bIpiVxhgJYWJZrVHfb2vWsG21gvYMoUg6jnz2kY/FpzqHvNrAHBKL1+pnCKbQn8hvVC4BgBbOB05w54ekFdH1cf95gMeOf5dJD5SUqYg3Ae4nQQbBQagzzFn7XlhVEE+JmhAD7Vyhhsymec=
+    environment: development
+    on:
+      repo: kevinoconnor7/kevinoconnor7.github.io
+      branch: master
+    skip_cleanup: true
+  - provider: divshot
+    api_key:
+      secure: Gz5aBaaUuPykaeAPV7rlja10Q4n2bIpiVxhgJYWJZrVHfb2vWsG21gvYMoUg6jnz2kY/FpzqHvNrAHBKL1+pnCKbQn8hvVC4BgBbOB05w54ekFdH1cf95gMeOf5dJD5SUqYg3Ae4nQQbBQagzzFn7XlhVEE+JmhAD7Vyhhsymec=
+    environment: staging
+    on:
+      repo: kevinoconnor7/kevinoconnor7.github.io
+      branch: staging
+    skip_cleanup: true
+  - provider: divshot
+    api_key:
+      secure: Gz5aBaaUuPykaeAPV7rlja10Q4n2bIpiVxhgJYWJZrVHfb2vWsG21gvYMoUg6jnz2kY/FpzqHvNrAHBKL1+pnCKbQn8hvVC4BgBbOB05w54ekFdH1cf95gMeOf5dJD5SUqYg3Ae4nQQbBQagzzFn7XlhVEE+JmhAD7Vyhhsymec=
+    environment: production
+    on:
+      repo: kevinoconnor7/kevinoconnor7.github.io
+      branch: production
+    skip_cleanup: true
