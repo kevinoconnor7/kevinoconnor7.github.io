@@ -2,7 +2,7 @@
 layout: post
 title: CloudFlare Dynamic DNS
 category: code
-tags: 
+tags:
 ---
 So I have an extra computer back home that runs some VMs that I like to have
 access to remotely. Easy enough, just some basic DDNS. However, I use
@@ -11,29 +11,7 @@ CloudFlare does have an awesome API for updating DNS records.
 
 ### Final Script:
 
-{% highlight bash %}
-#!/bin/sh
-WAN_IP=`wget -O - -q http://ifconfig.me/ip`
-OLD_WAN_IP=`cat /var/CURRENT_WAN_IP.txt`
-if [ "$WAN_IP" = "$OLD_WAN_IP" ]
-then
-        echo "IP Unchanged"
-else
-        curl https://www.cloudflare.com/api_json.html \
-          -d a=rec_edit \
-          -d tkn=8afbe6dea02407989af4dd4c97bb6e25 \
-          -d email=sample@example.com \
-          -d z=example.com \
-          -d id=9001 \
-          -d type=A \
-          -d name=sub \
-          -d ttl=1 \
-          -d "content=$WAN_IP"
-        echo $WAN_IP > /var/CURRENT_WAN_IP.txt
-fi
-{% endhighlight %}
-    
-    
+{% gist kevinoconnor7/4036347 %}
 
 So let's go over how I got here. First things first, you'll need your API key
 which you can get from your account settings page. You'll also need to know
@@ -96,16 +74,16 @@ additions.
 ### Putting it together
 
 To finalize I grab the current WAN IP from the plaintext service
-[[http://ifconfig.me/ip](http://ifconfig.me/ip)](http://ifconfig.me/ip). With
+[ifconfig.io/ip](http://ifconfig.io/ip). With
 a little work I get the final product at the top of this post. I also create a
-[gist](https://gist.github.com/4036347) of this if you prefer to make some
-edits.
+[gist](https://gist.github.com/kevinoconnor7/4036347) of this if you prefer to
+make some edits.
 
 To automate the process I simply wrote a cron to:
 
-{% highlight bash %} 
+{% highlight bash %}
 */5	*	*	*	*	~/scripts/cf_dynamic_ip.sh
-{% endhighlight %} 
+{% endhighlight %}
 
 ### Some Notes
 
@@ -113,4 +91,3 @@ Right now I have it store the current WAN IP in /var/. You can change it to
 your preferred location or you can just get rid of the storing of it and the
 comparison. An issue that could arise that if the script fails to set the IP
 on CloudFlare, it will not try again until the WAN IP changes.
-
