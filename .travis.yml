@@ -15,7 +15,7 @@ deploy:
     environment: staging
     on:
       repo: kevinoconnor7/kevinoconnor7.github.io
-      branch: staging
+      branch: master
     skip_cleanup: true
   - provider: divshot
     api_key:
@@ -23,5 +23,5 @@ deploy:
     environment: production
     on:
       repo: kevinoconnor7/kevinoconnor7.github.io
-      branch: production
+      branch: master
     skip_cleanup: true
