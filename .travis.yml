@@ -1,4 +1,10 @@
 language: ruby
 rvm:
-  - 2.3.0
+- 2.2
 script: bundle exec jekyll build
+after_success:
+  - ./scripts/deploy_to_s3.sh
+env:
+  global:
+  - secure: Qg6GN9PqH3yqOt9d2ANTDhchzEpQDtbmf9JyG9ziVzx4z4QuyaR/jw+x2gNE1gO4qLNXr68703CtsKvS6iixehjAa/PM6xc+QRRP1SXmv3VSGqseEr2k6WP0Si8C4ypbqlsxDnRWDGtudoHhpqjOCOC75X301PywUdaosyAkGTM=
+  - secure: aDrdfy0ralbDVcgeU+fu4sFLIyYyrvyXn1uI+QF1m7bjQlPvkbhH43kf8Ue+eYORxfzT+7zegg7/zO5qYbizw94GG1R49YH29IaxaT5tebSmiur+PX5fjOWrKRcd4vnBUmIeybnEuqRxk1LbC/Yyzq/0Buj/Fu60MDk/miydRK0=
