@@ -23,6 +23,8 @@ author:
 exclude:
   - vendor
   - divshot.json
+  - Gemfile
+  - Gemfile.lock
 
 # Custom vars
 version:             2.1.0
