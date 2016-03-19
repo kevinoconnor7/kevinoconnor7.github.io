@@ -33,19 +33,17 @@ I have decided to document how to include it on your own instance.
 ## How to install
   1. [Download](https://github.com/kevinoconnor7/osTicket-auth-cas/releases/latest)
   the source or compiled PHAR package.
-  2. If you downloaded the PHAR package skip to step #8.
+  2. If you downloaded the PHAR package skip to step #6.
   3. Expand the downloaded compressed container.
   4. Clone [core-plugins](https://github.com/osTicket/core-plugins) into another
   directory.
-  5. In your php.ini file ensure that `phar.readonly = Off`
-  6. In the expanded folder run `php ../core-plugins/make.php build auth-cas`
-  7. In your php.ini file ensure that `phar.readonly = On`
-  8. Move the `auth-cas.phar` file to your `<osticket root>/include/plugins/`
-  9. Login to the SCP of osTicket and navigate to Admin Panel > Manage > Plugins
-  10. Select `Add New Plugin`
-  11. Install the `JASIG CAS Authentication` plugin
-  12. Click on the plugin title to configure the plugin
-  13. Once configured go back to the plugins menu and enable the plugin
+  5. In the expanded folder run `php -dphar.readonly=0 ../core-plugins/make.php build auth-cas`
+  6. Move the `auth-cas.phar` file to your `<osticket root>/include/plugins/`
+  7. Login to the SCP of osTicket and navigate to Admin Panel > Manage > Plugins
+  8. Select `Add New Plugin`
+  9. Install the `JASIG CAS Authentication` plugin
+  10. Click on the plugin title to configure the plugin
+  11. Once configured go back to the plugins menu and enable the plugin
 
 ## Notes
  * If in production please do not leave `phar.readonly = Off` in your php.ini
