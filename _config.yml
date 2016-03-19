@@ -1,26 +1,35 @@
 # Permalinks
-permalink:        pretty
-relative_permalinks: true
+permalink:           pretty
 
 # Setup
 title:            Kevin O'Connor
 tagline:          'Software Engineer at large'
-description:      "Software engineer at Google. I occasionally write about some of my <a href='https://github.com/kevinoconnor7'>side projects</a>."
+description:      >
+  Software engineer at Google. I occasionally write about some of my
+  <a href='https://github.com/kevinoconnor7'>side projects</a>.
 url:              https://kevo.io
-baseurl:          /
+paginate:            5
+baseurl:          ""
 
+# Assets
+sass:
+  style:            :compressed
+
+# About/contact
 author:
   name:           "Kevin O'Connor"
   url:            https://kevo.io
-
-paginate:         5
 
 exclude:
   - vendor
   - divshot.json
 
 # Custom vars
-version:          2.1.0
-
+version:             2.1.0
 github:
-  repo:           https://github.com/poole/hyde
+  repo:              https://github.com/poole/hyde
+
+# Gems
+gems:
+  - jekyll-paginate
+  - jekyll-gist

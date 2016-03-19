@@ -4,8 +4,7 @@ title: About
 ---
 
 I'm Kevin and I'm a software engineer working for
-<a href="http://google.com">Google</a>. I'm currently working on making Docs
-more accessible and faster. I live and work in NYC.
+<a href="http://google.com">Google</a>. I live and work in NYC.
 
 I have previously worked for <a href="http://panoramaed.com">Panorama Education</a>,
 <a href="http://rpi.edu">Rensselaer Polytechnic Institute</a>, and

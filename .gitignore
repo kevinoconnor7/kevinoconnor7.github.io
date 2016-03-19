@@ -39,6 +39,8 @@ validation-report.json
 
 # Folders to ignore
 node_modules
+.sass-cache
+.jekyll-metadata
 
 # Divshot
 .divshot-cache
