@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-Howdy! I'm Kevin and I'm a software engineer working for
+I'm Kevin and I'm a software engineer working for
 <a href="http://google.com">Google</a>. I'm currently working on making Docs
 more accessible and faster. I live and work in NYC.
 
