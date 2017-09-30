@@ -16,5 +16,5 @@ with my <a href="https://github.com/kevinoconnor7">Github</a> profile.
 
 Feel free to e-mail me via `kevin@` the root domain you're visiting this site at.
 If you feel the need to encrypt your e-mail,
-<a href="http://pgp.mit.edu/pks/lookup?op=get&search=0xC50D4B6C7E40A409">this</a>
+<a href="http://pgp.mit.edu/pks/lookup?op=get&search=0x47012E4882517B3F">this</a>
  is what you need from me. You can also find me on <a href="https://keybase.io/kevin">Keybase</a>.
