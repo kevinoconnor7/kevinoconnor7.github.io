@@ -26,6 +26,8 @@ jobs:
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v1
+        with:
+          name: built_site
 
   deploy-github:
     needs: build
@@ -43,6 +45,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: ghpages
         uses: actions/deploy-pages@v1
+        with:
+          artifact_name: built_site
 
   deploy-aws:
     needs: build
@@ -50,6 +54,8 @@ jobs:
     steps:
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v3
+        with:
+          name: built_site
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -60,5 +66,5 @@ jobs:
 
       - name: Sync output to S3
         run: |
-          aws s3 sync ./_site/ s3://kevo.io --delete
+          aws s3 sync ./built_site/ s3://kevo.io --delete
 
