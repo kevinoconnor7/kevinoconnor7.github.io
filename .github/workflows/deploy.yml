@@ -20,10 +20,10 @@ jobs:
           -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
           jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
         env:
-            JEKYLL_ENV: production
+          JEKYLL_ENV: production
       - name: Upload artifact
-          # Automatically uploads an artifact from the './_site' directory by default
-          uses: actions/upload-pages-artifact@v1
+        # Automatically uploads an artifact from the './_site' directory by default
+        uses: actions/upload-pages-artifact@v1
 
   deploy-github:
     needs: build
@@ -32,7 +32,7 @@ jobs:
       name: github-pages
       url: ${{ steps.ghpages.outputs.page_url }}
 
-    ermissions:
+    permissions:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
     
