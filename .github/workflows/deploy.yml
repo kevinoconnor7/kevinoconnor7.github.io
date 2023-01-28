@@ -68,4 +68,5 @@ jobs:
 
       - name: Sync output to S3
         run: |
-          aws s3 sync ./_site/ s3://kevo.io --delete
+          aws s3 sync ./_site/ s3://${{ secrets.S3_BUCKET }} --delete
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DIST }} --paths "/*"
