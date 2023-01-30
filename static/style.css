@@ -63,6 +63,7 @@
 
 .footer-socials > ul > li {
   display: inline;
+  margin-left: 15px;
 }
 
 .navigation-menu {
