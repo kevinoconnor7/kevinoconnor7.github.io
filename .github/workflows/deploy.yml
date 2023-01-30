@@ -14,15 +14,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
         with:
-          ruby-version: 3.2
-          bundler-cache: true
-      - name: Run tests
-        run: bundle exec jekyll build
-        env:
-          JEKYLL_ENV: production
+          hugo-version: 'latest'
+          extended: true
+      - name: Build
+        run: hugo -d _site --minify
       - name: Upload built site
         uses: actions/upload-artifact@v3
         with:
@@ -34,6 +32,7 @@ jobs:
 
   deploy-github:
     needs: build
+    if: ${{ github.ref == 'refs/heads/master' }} # only run for master commits
 
     environment:
       name: github-pages
@@ -51,6 +50,7 @@ jobs:
 
   deploy-aws:
     needs: build
+    if: ${{ github.ref == 'refs/heads/master' }} # only run for master commits
     runs-on: ubuntu-latest
     steps:
       - name: Download built_site artifact
