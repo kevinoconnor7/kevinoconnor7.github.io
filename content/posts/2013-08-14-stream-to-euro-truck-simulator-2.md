@@ -5,12 +5,12 @@ date: "2013-08-14T00:00:00Z"
 tags:
 - games
 - protips
-title: Stream to Euro Truck Simulator 2
+title: Stream music to Euro Truck Simulator 2
 aliases: [/games/2013/08/14/stream-to-euro-truck-simulator-2/]
 ---
 
 Oddly enough, I've recently become addicted to [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/),
-a very good trucking simulator. One of the great features of the game is that it has built in 
+a very good trucking simulator. One of the great features of the game is that it has built in
 suppport to play MP3 streams within the game. It comes prepacked with a bunch of European stations,
 but I wanted to add some of my local stations that are on [iHeartRadio](http://www.iheart.com/).
 
@@ -18,14 +18,14 @@ This led to two problems: finding the stream URL and then transcoding the stream
 
 ## Getting the stream
 
-This is a very varying step since each stream might be streamed through different applications, but 
+This is a very varying step since each stream might be streamed through different applications, but
 in general you can do some packet inspection to find out the stream source. In my case, someone very
-kindly compiled a TSV file of stations on iHeartRadio along with their 
+kindly compiled a TSV file of stations on iHeartRadio along with their
 [stream URLs](http://pastebin.com/YYamKGgr). Unforauntely, these streams are not given in MP3.
 
 ## Transcoding
 
-One of my favorite applications that is very commonly installed these days is 
+One of my favorite applications that is very commonly installed these days is
 [VLC](http://www.videolan.org/) which came quite in handy here. Once you have the stream URL, follow
 these steps:
 

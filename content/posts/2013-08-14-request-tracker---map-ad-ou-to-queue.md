@@ -26,7 +26,8 @@ answer to exentsionability, sadly written in Perl.
 Alas, I decided to tackle this challenge with the following Scrip.
 
 ## Final Code
-{% gist 6235387 %}
+
+{{< gist kevinoconnor7 6235387 >}}
 
 ## Configuration
 You'll need to add a Scrip by going to Tools -> Configuration -> Global -> Scrips -> Create and fill
@@ -35,9 +36,9 @@ out the form with the following information:
 <dl>
 	<dt>Description</dt>
 	<dd>
-		Give any description you want that let's you know what this Scrip does. **Prefix your 
-		description so that it will be first when sorted alphabetically (this is the order in which 
-		scrips are run).** This is important since you'll want to change the queue before the Scrip 
+		Give any description you want that let's you know what this Scrip does. **Prefix your
+		description so that it will be first when sorted alphabetically (this is the order in which
+		scrips are run).** This is important since you'll want to change the queue before the Scrip
 		that notifies the queue is run.
 	</dd>
 	<dt>Condition</dt>

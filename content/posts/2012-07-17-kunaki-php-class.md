@@ -22,14 +22,14 @@ ability, limited by Kunaki's documentation) and provides example uses.
 Here's a really simple example getting shipping options and pricing for an
 order:
 
-{{< highlight php >}}
+```php
 $order = new Kunaki_Order();
 $order->addProductId($ProductId, 10);
 $order->PostalCode = 10004;
 $order->Country = United States;
 $order->State_Province = NY;
 $shipping = $Kunaki->getShippingOptions($order);
-{{< / highlight >}}
+```
 
 From here you can have the pick the shipping method you want, fill in the rest
 of the customer infromation (though you likely already have it), and submit

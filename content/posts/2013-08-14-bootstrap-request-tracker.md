@@ -21,13 +21,14 @@ the theme to help spice things up a little bit. I've decided to share my custom 
 
 ## Custom CSS
 Apply this stylesheet in Tools -> Configuration -> Tools -> Theme -> Custom CSS (Advanced)
-{% gist 6234883 %}
+
+{{< gist kevinoconnor7 6234883 >}}
 
 **Note:** This has only been tested on 4.0 <= RT version <= 4.0.13.
 
 ## Custom background
-In the CSS I set a custom background image. I choose a nice background from 
-[Subtle Patterns](http://subtlepatterns.com/) like 
+In the CSS I set a custom background image. I choose a nice background from
+[Subtle Patterns](http://subtlepatterns.com/) like
 [this](http://subtlepatterns.com/grey-washed-wall/) to help spice up the background. Put that file
 in the noauth section of RT on the filesystem and name it custbg.png. If you name it something else
 just find and replace in the custom CSS.

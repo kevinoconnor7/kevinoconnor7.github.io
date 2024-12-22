@@ -13,7 +13,7 @@ CloudFlare does have an awesome API for updating DNS records.
 
 ### Final Script:
 
-{% gist kevinoconnor7/4036347 %}
+{{< gist kevinoconnor7 4036347 >}}
 
 So let's go over how I got here. First things first, you'll need your API key
 which you can get from your account settings page. You'll also need to know
@@ -24,13 +24,13 @@ the DNS Record ID of the record you which to modify.That's where we'll start
 If you need help, see [here](http://www.cloudflare.com/docs/client-
 api.html#s3.3). To keep it short, run this command:
 
-{{< highlight bash >}}
+```bash
 curl https://www.cloudflare.com/api_json.html \
   -d a=rec_load_all \
   -d tkn=8afbe6dea02407989af4dd4c97bb6e25 \
   -d email=sample@example.com \
   -d z=example.com
-{{< / highlight >}}  
+```
 
 If you're confused about what some of this stuff is then let me explain
 quickly. **tkn** should be set to your CloudFlare API key. **email** is the
@@ -47,7 +47,8 @@ parser](http://jsonviewer.stack.hu/).
 Similiar, the official documentation is [here](http://www.cloudflare.com/docs
 /client-api.html#s5.2). This time though, there's a little bit more involved:
 
-{{< highlight bash >}}
+
+```bash
 curl https://www.cloudflare.com/api_json.html \
   -d a=rec_edit \
   -d tkn=8afbe6dea02407989af4dd4c97bb6e25 \
@@ -57,7 +58,7 @@ curl https://www.cloudflare.com/api_json.html \
   -d type=A
   -d name=sub
   -d content=1.2.3.4
-{{< / highlight >}}    
+```
 
 A lot of the information is overlap from last time but there are a few new
 additions.
@@ -83,9 +84,9 @@ make some edits.
 
 To automate the process I simply wrote a cron to:
 
-{{< highlight bash >}}
+```bas
 */5	*	*	*	*	~/scripts/cf_dynamic_ip.sh
-{{< / highlight >}}
+```
 
 ### Some Notes
 
